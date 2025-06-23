@@ -1,0 +1,28 @@
+{
+  "name": "typescript-agent",
+  "version": "1.0.0",
+  "description": "TypeScript agent with RAG document retrieval and web search tools",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "watch": "tsc --watch"
+  },
+  "keywords": ["agent", "rag", "typescript", "vectorize"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.3.0"
+  },
+  "dependencies": {
+    "@vectorize-io/vectorize-client": "^1.0.0",
+    "axios": "^1.6.0",
+    "dotenv": "^16.3.0",
+    "openai": "^4.20.0",
+    "cheerio": "^1.0.0-rc.12",
+    "zod": "^3.22.0"
+  }
+} 
