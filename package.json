@@ -4,12 +4,19 @@
   "description": "TypeScript agent with RAG document retrieval and web search tools",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
-    "start": "node dist/index.js",
-    "dev": "ts-node src/index.ts",
+    "build": "next build",
+    "start": "next start",
+    "dev": "next dev",
+    "dev:ts": "ts-node src/index.ts",
+    "build:ts": "tsc",
     "watch": "tsc --watch"
   },
-  "keywords": ["agent", "rag", "typescript", "vectorize"],
+  "keywords": [
+    "agent",
+    "rag",
+    "typescript",
+    "vectorize"
+  ],
   "author": "",
   "license": "MIT",
   "devDependencies": {
@@ -18,11 +25,21 @@
     "typescript": "^5.3.0"
   },
   "dependencies": {
-    "@vectorize-io/vectorize-client": "^1.0.0",
+    "@ai-sdk/openai": "^1.3.22",
+    "@ai-sdk/react": "^1.2.12",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "ai": "^3.4.33",
+    "autoprefixer": "^10.4.21",
     "axios": "^1.6.0",
-    "dotenv": "^16.3.0",
-    "openai": "^4.20.0",
     "cheerio": "^1.0.0-rc.12",
+    "dotenv": "^16.3.0",
+    "next": "^14.2.30",
+    "openai": "^4.20.0",
+    "postcss": "^8.5.6",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwindcss": "^4.1.10",
     "zod": "^3.22.0"
   }
-} 
+}
