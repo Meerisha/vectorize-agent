@@ -1,5 +1,5 @@
 import { ToolInvocation, streamText } from 'ai';
-import { openai } from '@ai-sdk/openai';
+import { createOpenAI } from '@ai-sdk/openai';
 import { z } from 'zod';
 import axios from 'axios';
 
@@ -92,8 +92,14 @@ async function searchWeb({ query, maxResults = 5 }) {
 export async function POST(req: Request) {
   const { messages }: { messages: Message[] } = await req.json();
 
-  const result = streamText({
-    model: openai('gpt-4o'),
+  // Configure OpenAI client to use Vectorize endpoint
+  const vectorizeOpenAI = createOpenAI({
+    apiKey: process.env.VECTORIZE_API_KEY || process.env.OPENAI_API_KEY || '',
+    baseURL: `https://api.vectorize.io/v1/org/${process.env.VECTORIZE_ORG_ID || '87ca0e06-b815-4e5d-9e1a-730d1e25fddf'}/pipelines/${process.env.VECTORIZE_PIPELINE_ID || 'aip30bf3-8601-4c1c-bc92-9d5436d70326'}`
+  });
+
+  const result = await streamText({
+    model: vectorizeOpenAI('gpt-4o'),
     system: `You are a helpful AI assistant with access to two powerful tools:
 
 1. vectorize_retrieval: Search and retrieve relevant documents from a knowledge base using semantic search
@@ -115,7 +121,7 @@ Be conversational, helpful, and thorough in your responses.`,
           question: z.string().describe('The search query to find relevant documents'),
           numResults: z.number().optional().describe('Number of results to return (default: 5)').default(5),
         }),
-        execute: async ({ question, numResults }) => {
+        execute: async ({ question, numResults }: { question: string, numResults?: number }) => {
           console.log(`🔍 Searching knowledge base for: "${question}"`);
           
           const documents = await retrieveDocuments({ question, numResults });
@@ -137,7 +143,7 @@ Be conversational, helpful, and thorough in your responses.`,
           query: z.string().describe('The search query to find information on the web'),
           maxResults: z.number().optional().describe('Maximum number of results to return (default: 5)').default(5),
         }),
-        execute: async ({ query, maxResults }) => {
+        execute: async ({ query, maxResults }: { query: string, maxResults?: number }) => {
           console.log(`🌐 Searching web for: "${query}"`);
           
           const results = await searchWeb({ query, maxResults });

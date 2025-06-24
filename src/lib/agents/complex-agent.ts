@@ -1,7 +1,7 @@
 import OpenAI from 'openai';
-import { Tool, ToolResult, AgentConfig } from './types';
-import { VectorizeRetrievalTool } from './tools/vectorize-retrieval';
-import { WebSearchTool } from './tools/web-search';
+import { Tool, ToolResult, AgentConfig } from '../types';
+import { VectorizeRetrievalTool } from '../tools/vectorize-retrieval';
+import { WebSearchTool } from '../tools/web-search';
 
 export class Agent {
   private openai: OpenAI;
